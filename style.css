@@ -1,0 +1,12 @@
+
+section {
+    display:none;
+}
+
+section:target {
+    display:block;
+}
+
+section#about {
+    display:block;
+}
