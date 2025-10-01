@@ -1,4 +1,5 @@
 
+/*
 section {
     display:none;
 }
@@ -9,4 +10,20 @@ section:target {
 
 section#about {
     display:block;
+}
+-->
+*/
+
+html {
+  scroll-behavior: smooth;
+}
+
+/* Typewriter animation */
+.typewriter::after {
+  content: '|';
+  animation: blink 1s step-end infinite;
+}
+
+@keyframes blink {
+  50% { opacity: 0; }
 }

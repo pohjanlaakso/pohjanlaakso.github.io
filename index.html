@@ -1,3 +1,4 @@
+<!--
 <html>
   <head>
     <style>
@@ -17,3 +18,72 @@
 
 
   </html>
+-->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tatu Pohjanlaakso | Personal Website</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-100 transition-colors duration-300">
+
+  <!-- Navbar -->
+  <nav class="p-6 flex justify-between items-center sticky top-0 bg-white dark:bg-gray-800 shadow-md">
+    <h1 class="text-2xl font-bold">Tatu Pohjanlaakso</h1>
+    <div class="space-x-6">
+      <a href="#about" class="hover:underline">About</a>
+      <a href="#projects" class="hover:underline">Projects</a>
+      <a href="#contact" class="hover:underline">Contact</a>
+      <button id="theme-toggle" class="ml-4 p-2 bg-gray-200 dark:bg-gray-700 rounded">🌓</button>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <section class="h-screen flex flex-col items-center justify-center text-center px-4">
+    <h2 class="text-4xl md:text-6xl font-extrabold mb-4">Hi, I'm <span class="text-blue-500">Tatu Pohjanlaakso</span></h2>
+    <h3 class="text-2xl md:text-3xl font-semibold typewriter"></h3>
+  </section>
+
+  <!-- About -->
+  <section id="about" class="py-20 px-6 max-w-3xl mx-auto text-center">
+    <h2 class="text-4xl font-bold mb-6">About Me</h2>
+    <p class="text-lg leading-relaxed">
+      I’m a passionate developer with a background in ML / CS / MACRO / FINANCE / POLICY. I love building projects that combine
+      creativity and functionality. This website is built with pure HTML, CSS, and JavaScript.
+    </p>
+  </section>
+
+  <!-- Projects -->
+  <section id="projects" class="py-20 bg-gray-100 dark:bg-gray-800 px-6">
+    <div class="max-w-4xl mx-auto text-center">
+      <h2 class="text-4xl font-bold mb-6">Projects</h2>
+      <div class="grid md:grid-cols-2 gap-6">
+        <div class="p-6 bg-white dark:bg-gray-700 rounded-lg shadow hover:shadow-lg transition">
+          <h3 class="text-2xl font-semibold mb-2">🚀 Google Trends Nowcasting</h3>
+          <p>A brief description of your first project goes here.</p>
+        </div>
+        <div class="p-6 bg-white dark:bg-gray-700 rounded-lg shadow hover:shadow-lg transition">
+          <h3 class="text-2xl font-semibold mb-2">📊 Merchandise Trade ML</h3>
+          <p>A brief description of another cool project.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact -->
+  <section id="contact" class="py-20 px-6 text-center">
+    <h2 class="text-4xl font-bold mb-6">Contact</h2>
+    <p class="text-lg">Let's connect! Reach me at <a href="mailto:pohjanlaakso@gmail.com" class="text-blue-500 underline">pohjanlaakso@gmail.com</a></p>
+  </section>
+
+  <footer class="py-6 text-center bg-gray-200 dark:bg-gray-800">
+    <p>© 2025 Tatu Pohjanlaakso. Built with ❤️ and JavaScript.</p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
