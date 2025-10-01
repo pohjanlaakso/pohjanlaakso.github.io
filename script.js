@@ -30,13 +30,21 @@ function typeEffect() {
 typeEffect();
 
 // Dark mode toggle
-const themeToggle = document.getElementById("theme-toggle");
-themeToggle.addEventListener("click", () => {
-  document.documentElement.classList.toggle("dark");
-  localStorage.setItem("theme", document.documentElement.classList.contains("dark") ? "dark" : "light");
+document.addEventListener("DOMContentLoaded", () => {
+  const themeToggle = document.getElementById("theme-toggle");
+
+  // Apply saved theme
+  if (localStorage.getItem("theme") === "dark") {
+    document.documentElement.classList.add("dark");
+  }
+
+  // Toggle theme on button click
+  themeToggle.addEventListener("click", () => {
+    document.documentElement.classList.toggle("dark");
+    localStorage.setItem(
+      "theme",
+      document.documentElement.classList.contains("dark") ? "dark" : "light"
+    );
+  });
 });
 
-// Remember user preference
-if (localStorage.getItem("theme") === "dark") {
-  document.documentElement.classList.add("dark");
-}
