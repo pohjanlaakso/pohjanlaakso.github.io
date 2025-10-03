@@ -130,13 +130,12 @@ async function gatherVisitorInformationAsync() {
   return { ...syncData, ...asyncData}; // combine and return.
 }
 
-// google sheets
+// execution
+document.addEventListener("DOMContentLoaded", async() => {
 
-document.addEventListener("DOMContentLoaded", async () => {
+  // google sheets
   const visitorData = await gatherVisitorInfoForSheets();
-
   const sheetEndpoint = "https://script.google.com/macros/s/YOUR_DEPLOYED_WEB_APP_URL/exec";
-
   try {
     await fetch(sheetEndpoint, {
       method: "POST",
@@ -147,11 +146,6 @@ document.addEventListener("DOMContentLoaded", async () => {
   } catch (err) {
     console.error("❌ Failed to log visitor data:", err);
   }
-});
-
-
-// execution
-document.addEventListener("DOMContentLoaded", async() => {
   
   // typewriter effect
   const roles = [
