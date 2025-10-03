@@ -34,9 +34,9 @@ let visitorData = {}
   // advanced technical info
   visitorData.deviceMemory = navigator.deviceMemory;
   visitorData.cpuCores = navigator.hardwareConcurrency;
-  visitorData.onlineStatus = navigator.onlineStatus;
+  visitorData.onlineStatus = navigator.onLine;
   visitorData.cookies = navigator.cookieEnabled;
-  visitorData.touchSuppot = "ontouchstart" in window;
+  visitorData.touchSupport = "ontouchstart" in window;
   visitorData.darkmode = window.matchMedia("(prefers-color-scheme: dark").matches;
 
   // network info
@@ -95,12 +95,12 @@ async function fetchAsyncVisitorData() {
 // main async wrapper and display
 async function gatherVisitorInformationAsync() {
   const syncData = gatherVisitorInformation(); // get synchro data first.
-  const asyncData = fetchAsyncVisitorData(); // get A-syncrho data second.
+  const asyncData = await fetchAsyncVisitorData(); // get A-syncrho data second.
   return { ...syncData, ...asyncData}; // combine and return.
 }
 
 // execution
-codument.addEventListener("DOMContentLoaded", async() => {
+document.addEventListener("DOMContentLoaded", async() => {
   
   // typewriter effect
   const roles = [
