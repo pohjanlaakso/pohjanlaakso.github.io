@@ -67,7 +67,7 @@ let visitorData = {}
 
 async function logVisitorToGoogleSheet() {
   const visitorData = gatherVisitorInformation();
-  const ipInfo = await getIPandLocationInfo();
+  const ipInfo = await fetchAsyncVisitorData();
   const payload = { ...visitorData, ...ipInfo};
 
   const server_endpoint = "https://script.google.com/macros/s/AKfycbzrH2uFjxXE1GtmJv459XDBhPZcYs-etg-sEAqX4TuFYFpKkIVRUGmyOYjbets5kr7B/exec";
@@ -202,8 +202,3 @@ document.addEventListener("DOMContentLoaded", async() => {
     };
 
 });
-
-// const visitorData = gatherVisitorInformation();
-// const visitorContainer = document.getElementById("visitor-data");
-
-
