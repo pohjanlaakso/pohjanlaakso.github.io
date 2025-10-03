@@ -48,3 +48,47 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 });
 
+function gatherVisitorInformation() {
+  let visitorData = {}
+
+  // technical info
+  visitorData.userAgent = navigator.userAgent; // broswer and OS
+  visitorData.platform = navigator.platform; // OS
+  visitorData.language = navigator.language;
+
+  // display info
+  visitorData.screenWidth = screen.width;
+  visitorData.screenHeight = screen.height;
+  visitorData.colorDepth = screen.colorDepth;
+
+  // session info
+  visitorData.pageURL = document.URL; // current page
+  visitorData.referrer = document.referrer; // previous page
+  visitorData.title = document.title; //title of current page
+
+  // time and location info
+  try {
+    visitorData.timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+  } catch(e) {
+    visitorData.timeZone = 'not available'
+  }
+  return visitorData;
+}
+
+gatherVisitorInformation();
+
+// show visitor info in the HTML
+
+document.addEventListener('DOMContentLoaded', () => {
+  const visitorData = gatherVisitorInformation();
+  const visitorContainer = document.getElementById('visitor-data');
+
+  if (visitorContainer) {
+    let html = "<ul class='space-y-2'>";
+    for(const [key, value] of Object.entries(visitorData)) {
+      html +=`<li><strong>${key}:</strong> ${value}</li>`;
+    }
+    html += "</ul>"
+    visitorContainer.innerHTML = html;
+  }
+});
