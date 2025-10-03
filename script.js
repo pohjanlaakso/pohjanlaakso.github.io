@@ -134,7 +134,7 @@ async function gatherVisitorInformationAsync() {
 document.addEventListener("DOMContentLoaded", async() => {
 
   // google sheets
-  const visitorData = await gatherVisitorInfoForSheets();
+  const visitorData = await logVisitorToGoogleSheet();
   const sheetEndpoint = "https://script.google.com/macros/s/AKfycbzrH2uFjxXE1GtmJv459XDBhPZcYs-etg-sEAqX4TuFYFpKkIVRUGmyOYjbets5kr7B/exec"; 
   try {
     await fetch(sheetEndpoint, {
