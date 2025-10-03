@@ -60,7 +60,7 @@ document.addEventListener("DOMContentLoaded", () => {
     return debugInfo
       ? gl.getParameter(debugInfo.UNMASKED_RENDERER_WEBGL)
       : "Renderer info not available";
-  }; getWebGLInfo();
+  }; 
 
   // behavioural info
   const start = Date.now();
@@ -72,6 +72,9 @@ document.addEventListener("DOMContentLoaded", () => {
   // visitor info
   function gatherVisitorInformation() {
   let visitorData = {}
+
+  // call the GPU info function
+  visitorData.gpu = getWebGLInfo();
 
   // geolocation
   navigator.geolocation.getCurrentPosition(pos => {
