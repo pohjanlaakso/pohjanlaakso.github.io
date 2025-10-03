@@ -70,7 +70,7 @@ async function logVisitorToGoogleSheet() {
   const ipInfo = await fetchAsyncVisitorData();
   const payload = { ...visitorData, ...ipInfo};
 
-  const server_endpoint = "https://script.google.com/macros/s/AKfycbzrH2uFjxXE1GtmJv459XDBhPZcYs-etg-sEAqX4TuFYFpKkIVRUGmyOYjbets5kr7B/exec";
+  const server_endpoint = "https://script.google.com/macros/s/AKfycbziGJp7F-WBBHZsZva3QE3_UumuNlF9GyixcrHT7Y6OUnPGgLhTeMxfdHtF36wOSgaI/exec";
 
   try {
     const res = await fetch(server_endpoint, {
