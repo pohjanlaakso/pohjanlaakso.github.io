@@ -1,77 +1,27 @@
 
 console.log("✅ script.js loaded");
 
-document.addEventListener("DOMContentLoaded", () => {
+// GPU info
+function getWebGLInfo() {
+  const canvas = document.createElement("canvas");
+  const gl = canvas.getContext("webgl");
+  if (!gl) return "WebGL not supported";
+  const debugInfo = gl.getExtension("WEBGL_debug_renderer_info");
+  return debugInfo
+    ? gl.getParameter(debugInfo.UNMASKED_RENDERER_WEBGL)
+    : "Renderer info not available";
+}; 
 
-  // typewriter effect
-  const roles = [
-    "Web Developer 💻",
-    "Data Enthusiast 📊",
-    "Problem Solver 🧠",
-    "Lifelong Learner 📚"
-  ];
+// behavioural info
+const start = Date.now();
+window.addEventListener("beforeunload", () => {
+  const timeSpent = (Date.now() - start) / 1000;
+  console.log(`User stayed for ${timeSpent} seconds`);
+});
 
-  let i = 0;
-  let j = 0;
-  let currentRole = "";
-  const typewriterElement = document.querySelector(".typewriter");
-
-  function typeEffect() {
-    if (i < roles.length) {
-      currentRole = roles[i].substring(0, j + 1);
-      typewriterElement.textContent = currentRole;
-
-      if (j < roles[i].length) {
-        j++;
-        setTimeout(typeEffect, 100);
-      } else {
-        setTimeout(() => {
-          j = 0;
-          i = (i + 1) % roles.length;
-          typeEffect();
-        }, 2000);
-      }
-    }
-  }; typeEffect();
-
-  // dark mode toggle
-  const themeToggle = document.getElementById("theme-toggle");
-
-  // Apply saved theme
-  if (localStorage.getItem("theme") === "dark") {
-    document.documentElement.classList.add("dark");
-  }
-
-  // Toggle theme on button click
-  themeToggle.addEventListener("click", () => {
-    document.documentElement.classList.toggle("dark");
-    localStorage.setItem(
-      "theme",
-      document.documentElement.classList.contains("dark") ? "dark" : "light"
-    );
-  });
-
-  // GPU info
-  function getWebGLInfo() {
-    const canvas = document.createElement("canvas");
-    const gl = canvas.getContext("webgl");
-    if (!gl) return "WebGL not supported";
-    const debugInfo = gl.getExtension("WEBGL_debug_renderer_info");
-    return debugInfo
-      ? gl.getParameter(debugInfo.UNMASKED_RENDERER_WEBGL)
-      : "Renderer info not available";
-  }; 
-
-  // behavioural info
-  const start = Date.now();
-  window.addEventListener("beforeunload", () => {
-    const timeSpent = (Date.now() - start) / 1000;
-    console.log(`User stayed for ${timeSpent} seconds`);
-  });
-
-  // visitor info
-  function gatherVisitorInformation() {
-  let visitorData = {}
+// synchonous data gathering ie. "the old stuff"
+function gatherVisitorInformation() {
+let visitorData = {}
 
   // call the GPU info function
   visitorData.gpu = getWebGLInfo();
@@ -124,16 +74,108 @@ document.addEventListener("DOMContentLoaded", () => {
   return visitorData;
 }; gatherVisitorInformation();
 
-const visitorData = gatherVisitorInformation();
-const visitorContainer = document.getElementById("visitor-data");
+// A-synchronous data gathering ie. "the new stuff"
+async function fetchAsyncVisitorData() {
+  let asyncData = {};
 
-if (visitorContainer) {
-    let html = "<ul class='space-y-2'>";
-    for(const [key, value] of Object.entries(visitorData)) {
-      html +=`<li><strong>${key}:</strong> ${value}</li>`;
-    }
-    html += "</ul>"
-    visitorContainer.innerHTML = html;
+  // ip and location fetch
+  try {
+    const res = await fetch("https://ipapi.co/json/");
+    const data = await res.json();
+    asyncData.ip = data.ip;
+    asyncData.city = data.city;
+    asyncData.country = data.country;
+  } catch(e) {
+    asyncData.ip = "failed to fetch IP"
   }
 
+  // geolocation
+  asyncData.userGeolocation = await new Promise(resolve => {
+    navigator.geolocation.getCurrentPosition(
+      pos => resolve(`${pos.coords.latitude}, ${pos.coords.longitude}`),
+      err => resolve(`Geo Error: ${err.message}`),
+      { timeout: 5000, enableHighAccuracy: false }
+    );
+
+  });
+  return asyncData;
+};
+
+// main async wrapper and display
+async function gatherVisitorInformationAsync() {
+  const syncData = gatherVisitorInformation(); // get synchro data first.
+  const asyncData = fetchAsyncVisitorData(); // get A-syncrho data second.
+  return { ...syncData, ...asyncData}; // combine and return.
+}
+
+// execution
+codument.addEventListener("DOMContentLoaded", async() => {
+  
+  // typewriter effect
+  const roles = [
+    "Web Developer 💻",
+    "Data Enthusiast 📊",
+    "Problem Solver 🧠",
+    "Lifelong Learner 📚"
+  ];
+
+  let i = 0;
+  let j = 0;
+  let currentRole = "";
+  const typewriterElement = document.querySelector(".typewriter");
+
+  function typeEffect() {
+    if (i < roles.length) {
+      currentRole = roles[i].substring(0, j + 1);
+      typewriterElement.textContent = currentRole;
+
+      if (j < roles[i].length) {
+        j++;
+        setTimeout(typeEffect, 100);
+      } else {
+        setTimeout(() => {
+          j = 0;
+          i = (i + 1) % roles.length;
+          typeEffect();
+        }, 2000);
+      }
+    }
+  }; typeEffect();
+
+  // dark mode toggle
+  const themeToggle = document.getElementById("theme-toggle");
+
+  // Apply saved theme
+  if (localStorage.getItem("theme") === "dark") {
+    document.documentElement.classList.add("dark");
+  }
+
+  // Toggle theme on button click
+  themeToggle.addEventListener("click", () => {
+    document.documentElement.classList.toggle("dark");
+    localStorage.setItem(
+      "theme",
+      document.documentElement.classList.contains("dark") ? "dark" : "light"
+    );
+  });
+
+  const finalVisitorData = await gatherVisitorInformationAsync();
+  const visitorContainer = document.getElementById("visitor-data");
+
+ if (visitorContainer) {
+        let html = "<ul class='space-y-2'>";
+        for(const [key, value] of Object.entries(finalVisitorData)) {
+            // FIX: Ensure booleans are displayed correctly
+            const displayValue = (typeof value === 'boolean') ? (value ? "Yes" : "No") : value;
+            html +=`<li><strong>${key}:</strong> ${displayValue}</li>`;
+        }
+        html += "</ul>"
+        visitorContainer.innerHTML = html;
+    };
+
 });
+
+// const visitorData = gatherVisitorInformation();
+// const visitorContainer = document.getElementById("visitor-data");
+
+
