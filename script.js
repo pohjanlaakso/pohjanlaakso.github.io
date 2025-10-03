@@ -65,6 +65,30 @@ let visitorData = {}
   return visitorData;
 }; // gatherVisitorInformation();
 
+async function logVisitorToGoogleSheet() {
+  const visitorData = gatherVisitorInformation();
+  const ipInfo = await getIPandLocationInfo();
+  const payload = { ...visitorData, ...ipInfo};
+
+  const server_endpoint = "https://script.google.com/macros/s/AKfycbzrH2uFjxXE1GtmJv459XDBhPZcYs-etg-sEAqX4TuFYFpKkIVRUGmyOYjbets5kr7B/exec";
+
+  try {
+    const res = await fetch(server_endpoint, {
+      method: "POST",
+      headers: {"Content-Type": "application/json"},
+      body: JSON.stringify(payload)
+    });
+
+    if(res.ok) {
+      console.log("Visitor data sent to Google sheets");
+    } else {
+      console.error("Failed to log data:", await res.text());
+    }
+  } catch(err) {
+    console.error("Network error logging visitor:", err);
+  }
+}
+
 // A-synchronous data gathering ie. "the new stuff"
 async function fetchAsyncVisitorData() {
   let asyncData = {};
@@ -105,6 +129,26 @@ async function gatherVisitorInformationAsync() {
   const asyncData = await fetchAsyncVisitorData(); // get A-syncrho data second.
   return { ...syncData, ...asyncData}; // combine and return.
 }
+
+// google sheets
+
+document.addEventListener("DOMContentLoaded", async () => {
+  const visitorData = await gatherVisitorInfoForSheets();
+
+  const sheetEndpoint = "https://script.google.com/macros/s/YOUR_DEPLOYED_WEB_APP_URL/exec";
+
+  try {
+    await fetch(sheetEndpoint, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(visitorData)
+    });
+    console.log("✅ Visitor data logged to Google Sheets");
+  } catch (err) {
+    console.error("❌ Failed to log visitor data:", err);
+  }
+});
+
 
 // execution
 document.addEventListener("DOMContentLoaded", async() => {
