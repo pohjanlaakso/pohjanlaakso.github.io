@@ -145,7 +145,7 @@ document.addEventListener("DOMContentLoaded", async() => {
     console.log("✅ Visitor data logged to Google Sheets");
   } catch (err) {
     console.error("❌ Failed to log visitor data:", err);
-  }
+  };
   
   // typewriter effect
   const roles = [
