@@ -87,6 +87,8 @@ async function logVisitorToGoogleSheet() {
   } catch(err) {
     console.error("Network error logging visitor:", err);
   }
+
+  return payload;
 }
 
 // A-synchronous data gathering ie. "the new stuff"
@@ -134,18 +136,8 @@ async function gatherVisitorInformationAsync() {
 document.addEventListener("DOMContentLoaded", async() => {
 
   // google sheets
-  const visitorData = await logVisitorToGoogleSheet();
-  const sheetEndpoint = "https://script.google.com/macros/s/AKfycbzrH2uFjxXE1GtmJv459XDBhPZcYs-etg-sEAqX4TuFYFpKkIVRUGmyOYjbets5kr7B/exec"; 
-  try {
-    await fetch(sheetEndpoint, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(visitorData)
-    });
-    console.log("✅ Visitor data logged to Google Sheets");
-  } catch (err) {
-    console.error("❌ Failed to log visitor data:", err);
-  };
+  await logVisitorToGoogleSheet();
+  
   
   // typewriter effect
   const roles = [
