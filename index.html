@@ -91,6 +91,28 @@
     </div>
    </section>
 
+   <!--visior IP -->
+   <section id="visitor-ip">
+    <body>
+    <h1>Your IP Address: <span id="ip-display">Loading...</span></h1>
+
+    <script>
+        // Use a service like ipify to get the public IP address
+        fetch('https://api.ipify.org?format=json')
+            .then(response => response.json())
+            .then(data => {
+                // 'data' will be an object like: { "ip": "123.456.789.0" }
+                document.getElementById('ip-display').textContent = data.ip;
+                console.log('Visitor IP:', data.ip);
+            })
+            .catch(error => {
+                document.getElementById('ip-display').textContent = 'Error fetching IP';
+                console.error('Error:', error);
+            });
+    </script>
+    </body>
+   </section>
+   
   <footer class="py-6 text-center bg-gray-200 dark:bg-gray-800">
     <p>© 2025 Tatu Pohjanlaakso. Built with ❤️ and JavaScript.</p>
   </footer>
