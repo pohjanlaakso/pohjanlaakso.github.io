@@ -1,36 +1,40 @@
-// Typewriter effect
-const roles = [
-  "Web Developer 💻",
-  "Data Enthusiast 📊",
-  "Problem Solver 🧠",
-  "Lifelong Learner 📚"
-];
-let i = 0;
-let j = 0;
-let currentRole = "";
-const typewriterElement = document.querySelector(".typewriter");
 
-function typeEffect() {
-  if (i < roles.length) {
-    currentRole = roles[i].substring(0, j + 1);
-    typewriterElement.textContent = currentRole;
+console.log("✅ script.js loaded");
 
-    if (j < roles[i].length) {
-      j++;
-      setTimeout(typeEffect, 100);
-    } else {
-      setTimeout(() => {
-        j = 0;
-        i = (i + 1) % roles.length;
-        typeEffect();
-      }, 2000);
-    }
-  }
-}
-typeEffect();
-
-// Dark mode toggle
 document.addEventListener("DOMContentLoaded", () => {
+
+  // typewriter effect
+  const roles = [
+    "Web Developer 💻",
+    "Data Enthusiast 📊",
+    "Problem Solver 🧠",
+    "Lifelong Learner 📚"
+  ];
+
+  let i = 0;
+  let j = 0;
+  let currentRole = "";
+  const typewriterElement = document.querySelector(".typewriter");
+
+  function typeEffect() {
+    if (i < roles.length) {
+      currentRole = roles[i].substring(0, j + 1);
+      typewriterElement.textContent = currentRole;
+
+      if (j < roles[i].length) {
+        j++;
+        setTimeout(typeEffect, 100);
+      } else {
+        setTimeout(() => {
+          j = 0;
+          i = (i + 1) % roles.length;
+          typeEffect();
+        }, 2000);
+      }
+    }
+  }; typeEffect();
+
+  // dark mode toggle
   const themeToggle = document.getElementById("theme-toggle");
 
   // Apply saved theme
@@ -46,9 +50,9 @@ document.addEventListener("DOMContentLoaded", () => {
       document.documentElement.classList.contains("dark") ? "dark" : "light"
     );
   });
-});
 
-function gatherVisitorInformation() {
+  // visitor info
+  function gatherVisitorInformation() {
   let visitorData = {}
 
   // technical info
@@ -73,17 +77,15 @@ function gatherVisitorInformation() {
     visitorData.timeZone = 'not available'
   }
   return visitorData;
-}
+}; gatherVisitorInformation();
 
-gatherVisitorInformation();
 
-// show visitor info in the HTML
 
-document.addEventListener('DOMContentLoaded', () => {
-  const visitorData = gatherVisitorInformation();
-  const visitorContainer = document.getElementById('visitor-data');
 
-  if (visitorContainer) {
+const visitorData = gatherVisitorInformation();
+const visitorContainer = document.getElementById("visitor-data");
+
+if (visitorContainer) {
     let html = "<ul class='space-y-2'>";
     for(const [key, value] of Object.entries(visitorData)) {
       html +=`<li><strong>${key}:</strong> ${value}</li>`;
@@ -91,4 +93,5 @@ document.addEventListener('DOMContentLoaded', () => {
     html += "</ul>"
     visitorContainer.innerHTML = html;
   }
+
 });
