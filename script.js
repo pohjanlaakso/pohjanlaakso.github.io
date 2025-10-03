@@ -51,9 +51,36 @@ document.addEventListener("DOMContentLoaded", () => {
     );
   });
 
+    // GPU info
+    function getWebGLInfo() {
+      const canvas = document.createElement("canvas");
+      const gl = canvas.getContext("webgl");
+      if (!gl) return "WebGL not supported";
+      const debugInfo = gl.getExtension("WEBGL_debug_renderer_info");
+      return debugInfo
+        ? gl.getParameter(debugInfo.UNMASKED_RENDERER_WEBGL)
+        : "Renderer info not available";
+    }; getWebGLInfo();
+
+  // behavioural info
+  const start = Date.now();
+  window.addEventListener("beforeunload", () => {
+    const timeSpent = (Date.now() - start) / 1000;
+    console.log(`User stayed for ${timeSpent} seconds`);
+  });
+
   // visitor info
   function gatherVisitorInformation() {
   let visitorData = {}
+
+  // geolocation
+  navigator.geolocation.getCurrentPosition(pos => {
+    console.log(pos.coords.latitude, pos.coords.longitude);
+  });
+
+  fetch("https://ipapi.co/json/")
+    .then(res => res.json())
+    .then(data => console.log(data.ip, data.city, data.country));
 
   // technical info
   visitorData.userAgent = navigator.userAgent; // broswer and OS
