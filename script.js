@@ -76,6 +76,13 @@ async function fetchAsyncVisitorData() {
     asyncData.ip = data.ip;
     asyncData.city = data.city;
     asyncData.country = data.country;
+    asyncData.region = data.region;
+    asyncData.postal = data.postal;
+    asyncData.latitude = data.latitude;
+    asyncData.longitude = data.longitude;
+    asyncData.org = data.org; // ISP organisation name
+    asyncData.asn = data.asn; // autonomous sytem number
+    asyncData.network = data.network; // CIDR block
   } catch(e) {
     asyncData.ip = "failed to fetch IP"
   }
