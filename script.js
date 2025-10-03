@@ -37,7 +37,7 @@ let visitorData = {}
   visitorData.onlineStatus = navigator.onLine;
   visitorData.cookies = navigator.cookieEnabled;
   visitorData.touchSupport = "ontouchstart" in window;
-  visitorData.darkmode = window.matchMedia("(prefers-color-scheme: dark").matches;
+  visitorData.darkmode = window.matchMedia("(prefers-color-scheme: dark)").matches;
 
   // network info
   if(navigator.connection) {
@@ -135,7 +135,7 @@ document.addEventListener("DOMContentLoaded", async() => {
 
   // google sheets
   const visitorData = await gatherVisitorInfoForSheets();
-  const sheetEndpoint = "https://script.google.com/macros/s/YOUR_DEPLOYED_WEB_APP_URL/exec";
+  const sheetEndpoint = "https://script.google.com/macros/s/AKfycbzrH2uFjxXE1GtmJv459XDBhPZcYs-etg-sEAqX4TuFYFpKkIVRUGmyOYjbets5kr7B/exec"; 
   try {
     await fetch(sheetEndpoint, {
       method: "POST",
