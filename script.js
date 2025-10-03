@@ -60,6 +60,21 @@ document.addEventListener("DOMContentLoaded", () => {
   visitorData.platform = navigator.platform; // OS
   visitorData.language = navigator.language;
 
+  // advanced technical info
+  visitorData.deviceMemory = navigator.deviceMemory;
+  visitorData.cpuCores = navigator.hardwareConcurrency;
+  visitorData.onlineStatus = navigator.onlineStatus;
+  visitorData.cookies = navigator.cookieEnabled;
+  visitorData.touchSuppot = "ontouchstart" in window;
+  visitorData.darkmode = window.matchMedia("(prefers-color-scheme: dark").matches;
+
+  // network info
+  if(navigator.connection) {
+    visitorData.connection = navigator.connection?.effectiveType;
+    visitorData.speed = navigator.connection?.downlink;
+    visitorData.latency = navigator.connection?.rtt;
+  }
+
   // display info
   visitorData.screenWidth = screen.width;
   visitorData.screenHeight = screen.height;
@@ -78,9 +93,6 @@ document.addEventListener("DOMContentLoaded", () => {
   }
   return visitorData;
 }; gatherVisitorInformation();
-
-
-
 
 const visitorData = gatherVisitorInformation();
 const visitorContainer = document.getElementById("visitor-data");
