@@ -41,9 +41,9 @@ let visitorData = {}
 
   // network info
   if(navigator.connection) {
-    visitorData.connection = navigator.connection?.effectiveType;
-    visitorData.speed = navigator.connection?.downlink;
-    visitorData.latency = navigator.connection?.rtt;
+    visitorData.connection = navigator.connection.effectiveType;
+    visitorData.speed = navigator.connection.downlink;
+    visitorData.latency = navigator.connection.rtt;
   }
 
   // display info
