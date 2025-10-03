@@ -26,15 +26,6 @@ let visitorData = {}
   // call the GPU info function
   visitorData.gpu = getWebGLInfo();
 
-  // geolocation
-  navigator.geolocation.getCurrentPosition(pos => {
-    console.log(pos.coords.latitude, pos.coords.longitude);
-  });
-
-  fetch("https://ipapi.co/json/")
-    .then(res => res.json())
-    .then(data => console.log(data.ip, data.city, data.country));
-
   // technical info
   visitorData.userAgent = navigator.userAgent; // broswer and OS
   visitorData.platform = navigator.platform; // OS
@@ -72,7 +63,7 @@ let visitorData = {}
     visitorData.timeZone = 'not available'
   }
   return visitorData;
-}; gatherVisitorInformation();
+}; // gatherVisitorInformation();
 
 // A-synchronous data gathering ie. "the new stuff"
 async function fetchAsyncVisitorData() {
