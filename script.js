@@ -51,16 +51,16 @@ document.addEventListener("DOMContentLoaded", () => {
     );
   });
 
-    // GPU info
-    function getWebGLInfo() {
-      const canvas = document.createElement("canvas");
-      const gl = canvas.getContext("webgl");
-      if (!gl) return "WebGL not supported";
-      const debugInfo = gl.getExtension("WEBGL_debug_renderer_info");
-      return debugInfo
-        ? gl.getParameter(debugInfo.UNMASKED_RENDERER_WEBGL)
-        : "Renderer info not available";
-    }; getWebGLInfo();
+  // GPU info
+  function getWebGLInfo() {
+    const canvas = document.createElement("canvas");
+    const gl = canvas.getContext("webgl");
+    if (!gl) return "WebGL not supported";
+    const debugInfo = gl.getExtension("WEBGL_debug_renderer_info");
+    return debugInfo
+      ? gl.getParameter(debugInfo.UNMASKED_RENDERER_WEBGL)
+      : "Renderer info not available";
+  }; getWebGLInfo();
 
   // behavioural info
   const start = Date.now();
